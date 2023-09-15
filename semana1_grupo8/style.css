@@ -1,0 +1,169 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+}
+
+header img {
+    max-width: 100%;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+
+nav ul li {
+    display: inline;
+    margin: 0 20px;
+}
+
+/*
+#iscte-logo {
+    width: 50px; /* Tamanho desejado */
+    height: 50px; /* Tamanho desejado */
+    position: absolute;
+    top: 10px; /* Distância do topo */
+    right: 10px; /* Distância da direita */
+}
+*/
+
+
+nav ul li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+ul {
+    list-style: none;
+}
+
+.youtube-video {
+    width: 560px;
+    height: 315px;
+}
+
+
+section {
+    padding: 20px;
+}
+
+article {
+    margin-top: 20px;
+    background: #d3d3d3;
+}
+
+/* styles.css */
+.youtube-container {
+    width: 500px;
+    height: 480px;
+}
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid #333;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+caption {
+    font-weight: bold;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+}
+
+table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            border: 2px solid #007BFF;
+        }
+
+caption {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        th {
+            background-color: #007BFF;
+            color: #FFFFFF;
+            padding: 10px;
+        }
+
+        td {
+            text-align: center;
+            padding: 10px;
+            border: 1px solid #007BFF;
+        }
+
+        tr:nth-child(even) {
+            background-color: #F2F2F2;
+        }
+
+        tr:hover {
+            background-color: #E6E6E6;
+        }
+
+
+imagem-container {
+            display: inline-block;
+            justify-content: space-between;
+            align-items: center;
+            margin: 0 10px;
+        }
+
+        .imagem {
+            width: 30%;
+            max-width: 100%;
+        }
+
+        .legenda {
+            margin-top: 10px;
+        }
+
+#noticias{
+    text-align:center;
+    font-size: 27px;
+}
+
+#programa{
+    font-size: 20px;
+}
+
+
+#redes_sociais a img {
+    width: 7%;
+    height: 7%;
+    margin-right: 10px;
+}
+
+#inscricao{
+    font-size: 20px;
+}
+
+#inscricao input {
+    width:80%
+}
