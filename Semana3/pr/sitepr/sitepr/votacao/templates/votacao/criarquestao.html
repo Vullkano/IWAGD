@@ -1,0 +1,19 @@
+
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Perguntas</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'votacao/criarquestao_styles.css' %}">
+
+</head>
+<body>
+    <form method="post" action="{% url 'votacao:criarquestao' %}">
+        {% csrf_token %}
+        <label for="nova_questao">Texto da nova Questão:</label><br>
+        <input type="text" id="nova_questao" name="nova_questao"><br>
+        <input type="submit" value="Gravar nova questão">
+    </form>
+</body>
+</html>

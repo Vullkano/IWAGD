@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalhes da Questão</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'votacao/detalhe_styles.css' %}">
+</head>
+<body>
+    <h1>{{ questao.questao_texto }}</h1>
+    <div class="container">
+        {% if error_message %}
+        <p class="error-message">{{ error_message }}</p>
+        {% endif %}
+        <form action="{% url 'votacao:voto' questao.id %}" method="post">
+            {% csrf_token %}
+            {% for opcao in questao.opcao_set.all %}
+                <input type="radio" name="opcao" id="opcao{{ forloop.counter }}" value="{{ opcao.id }}" />
+                <label for="opcao{{ forloop.counter }}">{{ opcao.opcao_texto }}</label><br />
+            {% endfor %}
+            <input type="submit" value="Votar" />
+        </form>
+        <br>
+        <a href="{% url 'votacao:criaropcao' questao_id=questao.id %}" class="create-button"> Criar Nova Opção</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalhes da Questão</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'votacao/resultados_styles.css' %}">
+</head>
+<body>
+    <h1>{{ questao.questao_texto }}</h1>
+    <div class="container">
+        <ul>
+            {% for opcao in questao.opcao_set.all %}
+            <li>
+                {{ opcao.opcao_texto }} - {{ opcao.votos }} voto{{ opcao.votos|pluralize }}
+            </li>
+            {% endfor %}
+        </ul>
+        <p><a href="{% url 'votacao:detalhe' questao.id %}">Votar novamente?</a></p>
+    </div>
+</body>
+</html>
