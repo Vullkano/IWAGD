@@ -1,0 +1,42 @@
+Superuser
+
+username: jose
+password: jose
+
+
+LIGE-PL10
+
+username: antonio
+password: antonio
+
+LEI-22
+
+username: afonso
+password: afonso
+
+TB-03
+
+username: maria
+password: maria
+
+
+
+from django.contrib.auth.models import User
+
+
+antonio = User.objects.create_user(username='antonio', password='antonio')
+afonso = User.objects.create_user(username='afonso', password='afonso')
+maria = User.objects.create_user(username='maria', password='maria')
+
+
+from django.contrib.auth.models import Group
+
+grupo_lige_pl10 = Group.objects.get(name='LIGE-PL10')
+grupo_lei_22 = Group.objects.get(name='LEI-22')
+grupo_tb_03 = Group.objects.get(name='TB-03')
+
+
+antonio.groups.add(grupo_lige_pl10)
+afonso.groups.add(grupo_lei_22)
+maria.groups.add(grupo_tb_03)
+

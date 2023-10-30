@@ -1,0 +1,86 @@
+Grupo composto por:
+~ Diogo Freitas
+~ João Francisco Botas
+~ Marco Esperança
+#####################################
+
+python manage.py shell
+
+
+3.1.
+a)
+
+from votacao.models import Questao, Opcao
+from django.utils import timezone
+q = Questao(questao_texto="Gostas de programar para a Internet? ", pub_data=timezone.now())
+q.save()
+q.id
+q.questao_texto
+Questao.objects.all()
+q.opcao_set.all()
+q.opcao_set.create(opcao_texto= 'Adoro',votos=1)
+q.opcao_set.create(opcao_texto= 'Gosto',votos=5)
+q.opcao_set.create(opcao_texto= 'Mais ou menos',votos=3)
+q.opcao_set.create(opcao_texto= 'Nem por isso',votos=2)
+q.opcao_set.create(opcao_texto= 'Detesto',votos=1)
+q.opcao_set.all()
+q.save()
+
+b)
+
+q = Questao(questao_texto="Qual o seu algoritmo de Machine Learning preferido? ", pub_data=timezone.now())
+q.save()
+q.id
+q.opcao_set.create(opcao_texto= 'Regressão linear',votos=0)
+q.opcao_set.create(opcao_texto= 'Regressão logística',votos=0)
+q.opcao_set.create(opcao_texto= 'Árvores de decisão',votos=0)
+q.opcao_set.create(opcao_texto= 'SVM',votos=0)
+q.opcao_set.create(opcao_texto= 'KNN',votos=0)
+q.opcao_set.create(opcao_texto= 'K-Means',votos=0)
+q.opcao_set.create(opcao_texto= 'Random forest',votos=0)
+q.opcao_set.create(opcao_texto= 'XGBoost',votos=0)
+q.opcao_set.all()
+q.save()
+
+exit()
+
+python manage.py runserver
+
+#####################################
+?.
+
+In[?]:
+Out[?]:
+
+#####################################
+
+3.2.
+
+from votacao.models import Questao, Opcao
+from django.utils import timezone
+
+In[1]: Questao.objects.all()
+Out[1]: <QuerySet [<Questao: Entao sempre nos decidimos a fazer uma festa no fim do ano? >, 
+		<Questao: Gostas de programar para a Internet? >, 
+		<Questao: Qual o seu algoritmo de Machine Learning preferido? >]>
+
+			
+In[]: questao = Questao.objects.get(questao_texto__startswith="Gostas de programar")
+In[2]: Opcao.objects.filter(questao=questao)
+Out[2]: <QuerySet [<Opcao: Adoro>, <Opcao: Gosto>, <Opcao: Mais ou menos>, <Opcao: Nem por isso>, <Opcao: Detesto>]>
+
+
+In[3]: Opcao.objects.filter(questao=questao, votos__gt=2)
+Out[3]: <QuerySet [<Opcao: Gosto>, <Opcao: Mais ou menos>]>
+
+
+In[]: current_year = timezone.now().year
+In[]: years_ago = current_year - 3
+In[4]: Questao.objects.filter(pub_data__year__range=[years_ago, current_year])
+Out[4]: <QuerySet [<Questao: Entao sempre nos decidimos a fazer uma festa no fim do ano? >, 
+		<Questao: Gostas de programar para a Internet? >, 
+		<Questao: Qual o seu algoritmo de Machine Learning preferido? >]>
+
+3.3.
+
+exec(open('test_db.py', encoding='utf-8').read())

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sucesso ao Iniciar Sessão</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #007bff;
+        }
+
+        p {
+            margin: 20px 0;
+            color: #333;
+        }
+
+        .success-icon {
+            font-size: 5rem;
+            color: #28a745;
+            margin-bottom: 20px;
+        }
+
+        .back-button {
+            text-decoration: none;
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="success-icon">&#10004;</div>
+        <h1>Sucesso ao Iniciar Sessão!</h1>
+        <p>Bem-vindo de volta, {{ usr.username }}! <br>Está autenticado.</p>
+        <p>Email: {{ usr.email }}</p>
+        <p>Curso: {{ usr.aluno.curso }}</p>
+        <p>Grupo: {{ usr.aluno.curso}}-{{usr.aluno.numero_grupo}}</p>
+        <p>Votos restantes: {{ usr.aluno.max_votos }}</p>
+        <a href="{% url 'votacao:index' %}" class="link-to-profile">Voltar atrás</a>
+    </div>
+</body>
+
+</html>

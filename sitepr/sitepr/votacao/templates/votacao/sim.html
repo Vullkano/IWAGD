@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Site Elegante</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Arquivo CSS externo para estilos personalizados -->
+    <style>
+        /* Estilos CSS internos para estilos específicos desta página */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #343a40;
+            color: #ffffff;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        nav {
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        nav a {
+            margin: 0 20px;
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .section {
+            margin: 40px 0;
+            padding: 20px;
+            background-color: #ffffff;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+        }
+
+        footer {
+            background-color: #343a40;
+            color: #ffffff;
+            padding: 10px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <h1>Meu Site Elegante</h1>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <a href="#">Página Inicial</a>
+            <a href="#">Sobre</a>
+            <a href="#">Serviços</a>
+            <a href="#">Contato</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="section">
+            <h2>Bem-vindo ao Nosso Site</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel dolor eu nulla fermentum vehicula
+                vitae et sapien. Sed in libero in nisl tincidunt rhoncus non nec metus.</p>
+        </div>
+
+        <div class="section">
+            <h2>Nossos Serviços</h2>
+            <ul>
+                <li>Design Web</li>
+                <li>Desenvolvimento de Aplicações</li>
+                <li>Consultoria em TI</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Entre em Contato</h2>
+            <form>
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" name="nome" required><br>
+
+                <label for="email">E-mail:</label>
+                <input type="email" id="email" name="email" required><br>
+
+                <input type="submit" value="Enviar">
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 Meu Site Elegante. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+</body>
+
+</html>

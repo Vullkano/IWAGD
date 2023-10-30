@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Página inicial- pós login</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'votacao/index_styles.css' %}">
+</head>
+<body>
+    <h1>Lista de Questões</h1>
+    <div class="container">
+        {% if latest_question_list %}
+        <ul>
+            {% for questao in latest_question_list %}
+            <li>
+                <a href="{% url 'votacao:detalhe' questao.id %}">
+                    {{ questao.questao_texto }}
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>Não há questões disponíveis.</p>
+        {% endif %}
+        <br>
+        <br>
+        <div class="button-row">
+            <a href="{% url 'votacao:criarquestao' %}" class="action-button">Criar Nova Questão</a>
+            <div class="auth-buttons">
+                <a href="{% url 'votacao:logout' %}" class="auth-button special-button">Logout</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

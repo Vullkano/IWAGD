@@ -1,0 +1,53 @@
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #ffffff;
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+.error-container {
+    text-align: center;
+}
+
+.error-title {
+    font-size: 3rem;
+    color: #dc3545;
+}
+
+.error-image {
+    margin: 20px;
+}
+
+.error-image img {
+    animation: bounce 2s infinite;
+}
+
+.error-message {
+    font-size: 1.2rem;
+    margin: 20px 0;
+    color: #6c757d;
+}
+
+.error-link {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-30px);
+    }
+    60% {
+        transform: translateY(-15px);
+    }
+}
