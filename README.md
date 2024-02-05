@@ -34,7 +34,7 @@ pip install django django-allauth
 Para iniciar o servidor, vá até o diretório que contém o arquivo manage.py e execute o seguinte comando no terminal:
 
 ```bash
-python manage.py runserver --insecur
+python manage.py runserver --insecure
 ```
 O argumento --insecure é necessário para servir arquivos estáticos durante o desenvolvimento.
 
