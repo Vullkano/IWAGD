@@ -21,7 +21,7 @@ from .models import RedditUser, Message
 
 # Create your views here.
 
-openai_api_key = '6K/6bDj9cZLK6GYgt1+wdKoeIPKoPtCEJHkB6rgkzqHiVJanQO5ID4quKzPEKLhfA2jonjx1HdOA5o8NJO5BqA=='
+openai_api_key = 'Colocar Aqui a Chave da OpenAI'  # https://platform.openai.com/account/api-keys
 openai.api_key = openai_api_key
 
 

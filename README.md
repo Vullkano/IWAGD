@@ -43,11 +43,11 @@ Após iniciar o servidor, você poderá acessar o projeto no seu navegador atrav
 
 #### Nota:
 Este trabalho possui 2 chaves, sendo elas:
-- ChatGPT: https://platform.openai.com/account/api-keys
+- ChatGPT: https://platform.openai.com/account/api-keys (Esta chave deixa de ser funcional caso esteja em algum local público)
 - Recaptcha: https://www.google.com/recaptcha/admin/create (Usar a V2 com caixa de seleção)
 É necessário colocar estas chaves nos ficheiros: *views.py*, *login.html*, *settings.py*
 
-Ambas as chaves, presentes no código, foram encriptadas no site https://www.tools4noobs.com/online_tools/encrypt/, utilizando os seguintes parâmetros:
+A chave do _Recaptcha_ encontra-se encriptada no site https://www.tools4noobs.com/online_tools/encrypt/, com os seguintes parâmetros:
 - Key: Serit
 - Algorithm: Cast-256
 - Mode: CBC
