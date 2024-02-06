@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-26*qn$1_h)v385c#x*9^+w^gwc+%j7e81l@#tmim1t7b(0xvj#
 #DEBUG = True # para produção
 
 DEBUG = False
-ALLOWED_HOSTS=['*']
+ALLOWED_HOSTS = ['*']
 
 
 try:
@@ -119,8 +119,8 @@ SERVE_MEDIA_FILES = True
 
 # Application definition
 
-RECAPTCHA_PUBLIC_KEY = '6Lf5eYooAAAAAMFeToVnju1T74nrOyq256ejv1m3'
-RECAPTCHA_PRIVATE_KEY = '6Lf5eYooAAAAALU7LfNVg7Hhm3Jr2lQ_W9Tk3c-F'
+RECAPTCHA_PUBLIC_KEY = '8kvdXEjMgSLgsCdqYiCFHj1N9wdmhWeft3AsW1oHrObSD+457t7GC4SzLllOcI86'
+RECAPTCHA_PRIVATE_KEY = 'hkJHnwuI7WYXHffBIbCQAl9Vxk6YblHroMYi1YZBOYAOI+NZrGWiyWRICWqEhKsN'
 SILENCED_SYSTEM_CHECKS = ['captcha.recaptcha_test_key_error']
 
 SITE_ID = 2

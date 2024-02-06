@@ -1,45 +1,31 @@
+import re
+from io import BytesIO
+
+import openai
+import requests
+from allauth.socialaccount.models import SocialAccount
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
-from django.utils import timezone
-from django.core.files.storage import FileSystemStorage
-from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
-from django.urls import reverse
-import requests
-from django.views.decorators.http import require_POST
-from .models import *
-from django.contrib import messages
-import json
-from django.db.models import F
-from .models import Comment
-from .models import Comment
-from .forms import *
-from django.db.models import Q
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-import os
-from django.core.files.storage import default_storage
-from django.conf import settings
-import re
-import openai
-from django.db.models import Max
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-from django.contrib.auth.models import User
-from .models import RedditUser, Message
-from allauth.socialaccount.models import SocialAccount
-import requests
-from io import BytesIO
 from django.core.files import File
+from django.core.files.storage import default_storage
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Q
+from django.http import HttpResponseRedirect
+from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse
 
+from .forms import *
+from .models import RedditUser, Message
 
 # Create your views here.
 
-openai_api_key = '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'
+openai_api_key = '6K/6bDj9cZLK6GYgt1+wdKoeIPKoPtCEJHkB6rgkzqHiVJanQO5ID4quKzPEKLhfA2jonjx1HdOA5o8NJO5BqA=='
 openai.api_key = openai_api_key
 
-def index(request):
 
+def index(request):
     subreddits = Subreddit.objects.all()
 
     category_filter = request.GET.get('category_filter')
@@ -54,14 +40,12 @@ def index(request):
     users = []
     following_users = []
 
-
     if request.user.is_authenticated:
 
         if not hasattr(request.user, 'reddituser'):
             country = "PT"
             email = request.user.email
             username = email.split('@')[0]
-
 
             google_social_account = SocialAccount.objects.filter(user=request.user, provider='google').first()
             profile_picture = google_social_account.get_avatar_url() if google_social_account else 'default.jpeg'
@@ -83,9 +67,9 @@ def index(request):
 
         following_users = request.user.reddituser.following.all()
 
-
     if subreddit_search_query:
-        subreddits = subreddits.filter(Q(name__icontains=subreddit_search_query) | Q(description__icontains=subreddit_search_query))
+        subreddits = subreddits.filter(
+            Q(name__icontains=subreddit_search_query) | Q(description__icontains=subreddit_search_query))
     if user_search_query:
         users = User.objects.filter(Q(username__icontains=user_search_query))
     subreddits_per_page = int(request.GET.get('subreddits_per_page', 10))
@@ -146,14 +130,12 @@ def registo(request):
         return render(request, 'subreddit/registo.html')
 
 
-
-
 def login_view(request):
     if request.method == 'POST':
         recaptcha_response = request.POST.get('g-recaptcha-response')
         if recaptcha_response:
             captcha_data = {
-                'secret': '6Lf5eYooAAAAALU7LfNVg7Hhm3Jr2lQ_W9Tk3c-F',
+                'secret': 'hkJHnwuI7WYXHffBIbCQAl9Vxk6YblHroMYi1YZBOYAOI+NZrGWiyWRICWqEhKsN',
                 'response': recaptcha_response
             }
             response = requests.post('https://www.google.com/recaptcha/api/siteverify', data=captcha_data)
@@ -198,7 +180,7 @@ def detalhe_subreddit(request, subreddit_id):
         posts = paginator.page(1)
     except EmptyPage:
         posts = paginator.page(paginator.num_pages)
-    return render(request, 'subreddit/detalhe_subreddit.html', {'subreddit': subreddit, 'posts': posts,})
+    return render(request, 'subreddit/detalhe_subreddit.html', {'subreddit': subreddit, 'posts': posts, })
 
 
 @login_required(login_url="subreddit:login")
@@ -223,8 +205,6 @@ def criar_subreddit(request):
     return render(request, 'subreddit/criar_subreddit.html', {'interest_categories': formatted_categories})
 
 
-
-
 @login_required(login_url="subreddit:login")
 def apagar_subreddit(request, subreddit_id):
     subreddit = get_object_or_404(Subreddit, pk=subreddit_id)
@@ -245,10 +225,8 @@ def criar_post(request, subreddit_id):
 
             fs = FileSystemStorage()
 
-
             username = request.user.username
             post_image_name = f"post_{username}_{title}_{image.name}"
-
 
             image = fs.save(post_image_name, image)
         else:
@@ -259,7 +237,6 @@ def criar_post(request, subreddit_id):
         novo_post.save()
         return redirect('subreddit:detalhe_subreddit', subreddit_id=subreddit_id)
     return render(request, 'subreddit/criar_post.html', {'subreddit': subreddit})
-
 
 
 @login_required(login_url="subreddit:login")
@@ -274,7 +251,6 @@ def criar_comentario(request, subreddit_id, post_id):
 
             fs = FileSystemStorage()
 
-
             username = request.user.username
             post_image_name = f"comment_{username}_{author}_{image.name}"
 
@@ -285,16 +261,18 @@ def criar_comentario(request, subreddit_id, post_id):
         if content.startswith('!gpt '):
             command = content[5:]
             response = ask_openai(command)
-            new_comment = Comment(content='!gpt ' + command, post=post, author=author, pub_data_comentario=pub_data_comentario, image=image)
+            new_comment = Comment(content='!gpt ' + command, post=post, author=author,
+                                  pub_data_comentario=pub_data_comentario, image=image)
             new_comment.save()
-            gpt_comment = Comment(content=response, post=post, author=User.objects.get(username='Chat GPT'), pub_data_comentario=pub_data_comentario, image=image)
+            gpt_comment = Comment(content=response, post=post, author=User.objects.get(username='Chat GPT'),
+                                  pub_data_comentario=pub_data_comentario, image=image)
             gpt_comment.save()
         else:
 
-            new_comment = Comment(content=content, post=post, author=author, pub_data_comentario=pub_data_comentario, image=image)
+            new_comment = Comment(content=content, post=post, author=author, pub_data_comentario=pub_data_comentario,
+                                  image=image)
             new_comment.save()
     return redirect('subreddit:detalhe_post', subreddit_id=subreddit_id, post_id=post_id)
-
 
 
 def detalhe_post(request, subreddit_id, post_id):
@@ -360,6 +338,7 @@ def vote_post(request, subreddit_id, post_id):
         return redirect(referer)
     else:
         return redirect('subreddit:index')
+
 
 @login_required(login_url="subreddit:login")
 def delete_post(request, subreddit_id, post_id):
@@ -443,6 +422,7 @@ def post_filter(request, subreddit_id):
         'posts_per_page': posts_per_page,
     })
 
+
 def comment_filter(request, subreddit_id, post_id):
     subreddit = get_object_or_404(Subreddit, pk=subreddit_id)
     post = get_object_or_404(Post, pk=post_id)
@@ -460,6 +440,7 @@ def comment_filter(request, subreddit_id, post_id):
 
 def about_me(request):
     return render(request, 'subreddit/about_me.html')
+
 
 @login_required(login_url="subreddit:login")
 def logoutview(request):
@@ -496,6 +477,7 @@ def perfilview(request, username=None):
         'user_interests': user_interests,
     })
 
+
 def list_followers(request, username):
     user = get_object_or_404(User, username=username)
     followers = user.reddituser.followers.all()
@@ -507,6 +489,7 @@ def list_followers(request, username):
         'users': followers,
         'title': 'Seguidores de {}'.format(user.username)
     })
+
 
 def list_following(request, username):
     user = get_object_or_404(User, username=username)
@@ -534,7 +517,6 @@ def chat(request):
     return render(request, 'subreddit/chat.html', {'messages': messages, 'form': form})
 
 
-
 @login_required(login_url="subreddit:login")
 def subreddit_chat(request, subreddit_id):
     subreddit = get_object_or_404(Subreddit, id=subreddit_id)
@@ -549,12 +531,14 @@ def subreddit_chat(request, subreddit_id):
                 response = ask_openai(command)
 
                 Message.objects.create(sender=sender, content='!gpt ' + command, subreddit=subreddit)
-                Message.objects.create(sender=User.objects.get(username='Chat GPT'), recipient=sender, content=response, subreddit=subreddit)
+                Message.objects.create(sender=User.objects.get(username='Chat GPT'), recipient=sender, content=response,
+                                       subreddit=subreddit)
             else:
                 Message.objects.create(sender=sender, content=message, subreddit=subreddit)
     query = request.GET.get('q')
     if query:
-        messages = Message.objects.filter(subreddit=subreddit).filter(Q(sender__username__icontains=query) | Q(content__icontains=query))
+        messages = Message.objects.filter(subreddit=subreddit).filter(
+            Q(sender__username__icontains=query) | Q(content__icontains=query))
     else:
         messages = Message.objects.filter(subreddit=subreddit)
     form = MessageForm()
@@ -594,6 +578,7 @@ def editar_perfil(request):
         form = RedditUserEditForm(instance=reddit_user)
     return render(request, 'subreddit/editar_perfil.html', {'form': form})
 
+
 def edit_post(request, subreddit_id, post_id):
     post = get_object_or_404(Post, pk=post_id)
 
@@ -618,7 +603,6 @@ def edit_post(request, subreddit_id, post_id):
         return redirect('subreddit:detalhe_post', subreddit_id=subreddit_id, post_id=post_id)
 
 
-
 def edit_comment(request, subreddit_id, post_id, comment_id):
     comment = get_object_or_404(Comment, pk=comment_id)
     if request.user == comment.author:
@@ -641,7 +625,6 @@ def edit_comment(request, subreddit_id, post_id, comment_id):
         return render(request, 'subreddit/edit_comment.html', {'form': form, 'comment': comment})
     else:
         return redirect('subreddit:detalhe_post', subreddit_id=subreddit_id, post_id=post_id)
-
 
 
 @login_required(login_url="subreddit:login")
@@ -673,7 +656,8 @@ def chat_privado(request, username):
                     chat.messages.add(message)
                 form = MessageForm()
             else:
-                message = Message.objects.create(sender=sender, content=content, recipient=recipient, subreddit=chat.subreddit)
+                message = Message.objects.create(sender=sender, content=content, recipient=recipient,
+                                                 subreddit=chat.subreddit)
                 chat.messages.add(message)
                 form = MessageForm()
 
@@ -685,9 +669,9 @@ def chat_privado(request, username):
         messages = messages.filter(Q(sender__username__icontains=query) | Q(content__icontains=query))
     messages = messages.order_by('timestamp')
     sender_profile_picture = request.user.reddituser.profile_picture.url
-    return render(request, 'subreddit/chat.html', {'messages': messages, 'form': form, 'chat': chat, 'sender_profile_picture': sender_profile_picture, 'recipient': recipient})
-
-
+    return render(request, 'subreddit/chat.html',
+                  {'messages': messages, 'form': form, 'chat': chat, 'sender_profile_picture': sender_profile_picture,
+                   'recipient': recipient})
 
 
 @login_required(login_url="subreddit:login")
@@ -701,7 +685,8 @@ def listar_chats_privados(request):
     search_query_participants = request.GET.get('search_query_participants', '')
     usuarios_filtrados = todos_os_usuarios
     if search_query_participants:
-        usuarios_filtrados = [usuario for usuario in todos_os_usuarios if search_query_participants.lower() in usuario.username.lower()]
+        usuarios_filtrados = [usuario for usuario in todos_os_usuarios if
+                              search_query_participants.lower() in usuario.username.lower()]
 
     ultimas_mensagens = {}
 
@@ -719,6 +704,7 @@ def listar_chats_privados(request):
 
 def handler404(request, exception):
     return render(request, 'subreddit/404.html', status=404)
+
 
 def handler500(request, *args, **kwargs):
     return render(request, 'subreddit/500.html', status=500)

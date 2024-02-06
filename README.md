@@ -40,3 +40,14 @@ O argumento --insecure é necessário para servir arquivos estáticos durante o 
 
 ### Acessar o Projeto:
 Após iniciar o servidor, você poderá acessar o projeto no seu navegador através de http://127.0.0.1:8000/.
+
+#### Nota 
+Este trabalho possui 2 chaves, sendo elas:
+- ChatGPT: https://platform.openai.com/account/api-keys
+- Recaptcha: https://www.google.com/recaptcha/admin/create (Usar a V2 com caixa de seleção)
+É necessário colocar estas chaves nos ficheiros: *views.py*, *login.html*, *settings.py*
+
+Ambas as chaves, presentes no código, foram encriptadas no site https://www.tools4noobs.com/online_tools/encrypt/, utilizando os seguintes parâmetros:
+- Key: Serit
+- Algorithm: Cast-256
+- Mode: CBC
